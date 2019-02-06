@@ -13,7 +13,7 @@ public class TestsIoc {
     @Test
     public void test01() throws Exception {
         //1. 创建 Spring 的 IOC 容器
-        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("beans-ioc.xml");
 
         //2. 从 IOC 容器中获取 bean 的实例
         //Person person = ctx.getBean(Person.class);

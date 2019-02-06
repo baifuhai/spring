@@ -21,14 +21,14 @@ public class TimingAspect {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
 
-        System.out.println("timing, before: " + methodName + ", args: " + Arrays.asList(args));
+        System.out.println("[TimingAspect] before: " + methodName + ", args: " + Arrays.asList(args));
     }
 
     @After("com.test.aop.LoggingAspect.pointCut()")
     public void after(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
 
-        System.out.println("timing, after: " + methodName);
+        System.out.println("[TimingAspect] after: " + methodName);
     }
 
 }

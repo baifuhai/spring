@@ -4,6 +4,9 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- <context:annotation-config/> 和 <context:component-scan/> 同时存在的时候，前者会被忽略（from internet） -->
+    <context:annotation-config/>
+
     <!--
         base-package 属性指定一个需要扫描的基类包，会扫描这个基类包里及其子包中的所有类
         当需要扫描多个包时，可以使用逗号分隔
@@ -19,11 +22,17 @@
     <!--<context:component-scan base-package="com.test.scan" resource-pattern="service/**/*.class"/>
     <context:component-scan base-package="com.test.scan" resource-pattern="dao/*.class"/>-->
 
+    <!--
+        annotation：所有标注了该注解的类
+        assignable：所有该类及其子类
+        regex：正则表达式，com.test.* -> com.test 包下的所有类
+        custom：实现 org.springframework.core.type.filter.TypeFilter 接口，自定义过滤规则
+    -->
     <!--<context:component-scan base-package="com.test.scan" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-        <context:exclude-filter type="assignable" expression="com.test.dao.PersonDaoSub"/>
-        <context:exclude-filter type="regex" expression="com.test.dao.*DaoSub"/>
+        <context:exclude-filter type="assignable" expression="com.test.scan.dao.PersonDao"/>
+        <context:exclude-filter type="regex" expression="com\.test\.scan\.dao\..*Dao.*"/>
     </context:component-scan>-->
 
 </beans>

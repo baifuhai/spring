@@ -16,6 +16,7 @@ public class MyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //ServletContext servletContext = req.getServletContext();//servlet-api 2.5 没有该方法
         ServletContext servletContext = getServletContext();
 
         //ApplicationContext applicationContext = (ApplicationContext) servletContext.getAttribute("applicationContext");

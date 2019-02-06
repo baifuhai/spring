@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class TestsScan {
 
     @Test
-    public void testScan() {
+    public void test01() {
         ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("beans-scan.xml");
 
         PersonService personService = (PersonService) ctx.getBean("personService");
