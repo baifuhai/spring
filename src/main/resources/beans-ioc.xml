@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="person" class="com.test.ioc.bean.Person" scope="prototype" depends-on="car,car2">
+        <property name="name" value="zhangsan"/>
+        <!--<property name="name"><null></null></property>-->
+        <!--<property name="name"><value><![CDATA[<zhangsan>]]></value></property>-->
+
+        <property name="car" ref="car"/>
+
+        <property name="car.name" value="benz"/>
+
+        <!--<property name="list1">
+            <list>
+                <ref bean="car"/>
+                <ref bean="car2"/>
+            </list>
+        </property>-->
+        <property name="list1" ref="list1"/>
+
+        <property name="list2">
+            <list>
+                <value>123</value>
+                <value>456</value>
+            </list>
+        </property>
+
+        <property name="set">
+            <set>
+                <value>123</value>
+                <value>456</value>
+            </set>
+        </property>
+
+        <property name="map">
+            <map>
+                <entry key="1" value="a"></entry>
+                <entry key="2" value-ref="car"></entry>
+            </map>
+        </property>
+
+        <property name="properties">
+            <props>
+                <prop key="username">root</prop>
+                <prop key="password">123456</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="car" class="com.test.ioc.bean.Car">
+        <constructor-arg value="bmw" index="0"/>
+        <constructor-arg value="120" index="1" type="int"/>
+    </bean>
+
+    <bean id="car2" class="com.test.ioc.bean.Car">
+        <constructor-arg value="audi" index="0"/>
+        <constructor-arg value="500000" index="1" type="double"/>
+    </bean>
+
+    <bean id="person2" class="com.test.ioc.bean.Person" p:name="lisi" autowire="byName"></bean>
+
+    <!--abstract无法实例化，容器中没有这个bean，用来被继承-->
+    <!--如果没有class属性，该bean必须是abstract-->
+    <bean id="personParent" class="com.test.ioc.bean.Person" abstract="true"></bean>
+
+    <!--继承父bean属性配置-->
+    <bean id="person3" class="com.test.ioc.bean.Person" parent="personParent" lazy-init="true"></bean>
+
+    <!--SpEL引用其他对象的属性-->
+    <bean id="person4" class="com.test.ioc.bean.Person" init-method="init" destroy-method="destroy">
+        <property name="name" value="#{person2.name.toString()}"/>
+    </bean>
+
+    <util:list id="list1">
+        <ref bean="car"/>
+        <ref bean="car2"/>
+    </util:list>
+
+    <bean class="com.test.ioc.config.PersonBeanPostProcessor"></bean>
+
+    <import resource="datasource.xml"/>
+    <!--<import resource="beans-factory.xml"/>-->
+    <!--<import resource="classpath:beans-factory.xml"/>-->
+    <!--<import resource="file:/path/to/beans-factory.xml"/>-->
+    <!--<import resource="http://path/to/beans-factory.xml"/>-->
+    <!--<import resource="ftp://path/to/beans-factory.xml"/>-->
+
+</beans>

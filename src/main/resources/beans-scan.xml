@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+        base-package 属性指定一个需要扫描的基类包，会扫描这个基类包里及其子包中的所有类
+        当需要扫描多个包时，可以使用逗号分隔
+        如果仅希望扫描特定的类而非基包下的所有类，可使用 resource-pattern 属性过滤特定的类
+    -->
+    <context:component-scan base-package="com.test.scan"/>
+
+    <!--<context:component-scan base-package="com.test.scan.service, com.test.scan.dao"/>-->
+
+    <!--<context:component-scan base-package="com.test.scan.service"/>
+    <context:component-scan base-package="com.test.scan.dao"/>-->
+
+    <!--<context:component-scan base-package="com.test.scan" resource-pattern="service/**/*.class"/>
+    <context:component-scan base-package="com.test.scan" resource-pattern="dao/*.class"/>-->
+
+    <!--<context:component-scan base-package="com.test.scan" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+        <context:exclude-filter type="assignable" expression="com.test.dao.PersonDaoSub"/>
+        <context:exclude-filter type="regex" expression="com.test.dao.*DaoSub"/>
+    </context:component-scan>-->
+
+</beans>

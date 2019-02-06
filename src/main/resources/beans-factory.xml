@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--静态工厂方法-->
+    <!--不是配置工厂实例，直接配置Car实例，如果工厂方法有入参，则通过constructor-arg传入-->
+    <bean id="car" class="com.test.factory.StaticCarFactory" factory-method="getInstance">
+        <constructor-arg value="bmw"/>
+    </bean>
+
+    <bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateInstance">
+        <constructor-arg value="2"></constructor-arg>
+    </bean>
+
+    <bean id="calendar" class="java.util.Calendar" factory-method="getInstance">
+    </bean>
+
+    <!--实例工厂方法-->
+    <bean id="instanceCarFactory" class="com.test.factory.InstanceCarFactory"></bean>
+
+    <bean id="car2" factory-bean="instanceCarFactory" factory-method="getInstance">
+        <constructor-arg value="benz"/>
+    </bean>
+
+    <bean id="simpleDateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="yyyy-MM-dd HH:mm:ss"/>
+    </bean>
+
+    <bean id="s" factory-bean="simpleDateFormat" factory-method="format">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="datetime" factory-bean="simpleDateFormat" factory-method="parse">
+        <constructor-arg value="1990-12-12 12:12:12"></constructor-arg>
+    </bean>
+
+    <!--FactoryBean-->
+    <bean id="car3" class="com.test.factory.CarFactoryBean">
+        <property name="name" value="audi"/>
+    </bean>
+
+</beans>
