@@ -46,7 +46,7 @@ import java.util.Arrays;
  * 7. @After 表示后置通知: 在方法执行之后执行的代码.
  */
 
-// 可以使用 @Order 注解指定切面的优先级，值越小优先级越高
+// 可以使用 @Order 注解指定切面的优先级，值越小优先级越高，越先执行
 @Order(1)
 // 通过添加 @Aspect 注解把这个类声明为一个切面，还要放到IOC容器中
 @Aspect
@@ -101,9 +101,9 @@ public class LoggingAspect {
      * 且环绕通知必须有返回值，返回值即为目标方法的返回值
      */
 	//@Around("pointCut()")
-	public Object around(ProceedingJoinPoint pjd) throws Throwable {
-        String methodName = pjd.getSignature().getName();
-        Object[] args = pjd.getArgs();
+	public Object around(ProceedingJoinPoint pjp) throws Throwable {
+        String methodName = pjp.getSignature().getName();
+        Object[] args = pjp.getArgs();
 
 		Object result = null;
         Throwable throwable = null;
@@ -113,7 +113,7 @@ public class LoggingAspect {
 			System.out.println("before: " + methodName + ", args: " + Arrays.asList(args));
 
 			// 执行目标方法
-			result = pjd.proceed();
+			result = pjp.proceed();
 		} catch (Throwable e) {
             throwable = e;
 		}
