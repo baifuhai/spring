@@ -62,6 +62,20 @@ public class TestsJdbc {
         jdbcTemplate.batchUpdate(sql, batchArgs);
     }
 
+    @Test
+    public void testQueryForMap() {
+        String sql = "select * from user where id = ?";
+        Map<String, Object> map = jdbcTemplate.queryForMap(sql, 1);
+        System.out.println(map);
+    }
+
+    @Test
+    public void testQueryForMapList() {
+        String sql = "select * from user";
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+        System.out.println(list);
+    }
+
     /**
      * 从数据库中获取一条记录, 实际得到对应的一个对象
      * 注意不是调用 queryForObject(String sql, Class<T> requiredType, Object... args)
@@ -71,8 +85,8 @@ public class TestsJdbc {
      * 3. 不支持级联属性，JdbcTemplate 到底是一个 JDBC 的小工具，而不是 ORM 框架
      */
     @Test
-    public void testQueryForObject(){
-        String sql = "select id, name, age from user where id = ?";
+    public void testQueryForEntity() {
+        String sql = "select * from user where id = ?";
         RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
         User user = jdbcTemplate.queryForObject(sql, rowMapper, 1);
         System.out.println(user);
@@ -83,11 +97,11 @@ public class TestsJdbc {
      * 注意调用的不是 queryForList 方法
      */
     @Test
-    public void testQueryForList(){
-        String sql = "select id, name, age from user where id >= ?";
+    public void testQueryForEntityList() {
+        String sql = "select * from user";
         RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
-        List<User> userList = jdbcTemplate.query(sql, rowMapper,1);
-        System.out.println(userList);
+        List<User> list = jdbcTemplate.query(sql, rowMapper);
+        System.out.println(list);
     }
 
     /**
@@ -95,10 +109,17 @@ public class TestsJdbc {
      * 使用 queryForObject(String sql, Class<T> requiredType)
      */
     @Test
-    public void testQueryForObject2(){
-        String sql = "select count(id) from user where id >= ?";
-        long count = jdbcTemplate.queryForObject(sql, Long.class, 1);
-        System.out.println(count);
+    public void testQueryForObject() {
+        String sql = "select name from user where id = ?";
+        String name = jdbcTemplate.queryForObject(sql, String.class, 1);
+        System.out.println(name);
+    }
+
+    @Test
+    public void testQueryForObjectList() {
+        String sql = "select name from user";
+        List<String> list = jdbcTemplate.queryForList(sql, String.class);
+        System.out.println(list);
     }
 
     @Test
